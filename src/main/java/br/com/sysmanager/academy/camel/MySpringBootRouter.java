@@ -8,13 +8,14 @@ import org.springframework.stereotype.Component;
  * <p/>
  * Use <tt>@Component</tt> to make Camel auto detect this route when starting.
  */
-@Component
+//@Component
 public class MySpringBootRouter extends RouteBuilder {
 
     @Override
     public void configure() {
         from("timer:hello?period={{timer.period}}").routeId("hello")
             .transform().method("myBean", "saySomething")
+            //.bean(MySpringBean.class, "saySomething()")
             .filter(simple("${body} contains 'foo'"))
                 .to("log:foo")
             .end()
